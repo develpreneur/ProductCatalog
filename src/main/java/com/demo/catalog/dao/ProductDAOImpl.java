@@ -5,44 +5,45 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.RowMapper;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.demo.catalog.model.Product;
 
-public class ProductDAOImpl implements ProductDAO {
+/**
+ * This console application demonstrates how to do CRUD operations using JDBC
+ * with Spring framework.
+ * 
+ * @author www.codejava.net
+ *
+ */
+public class ProductDAOImpl implements ProductDAO{
 	private JdbcTemplate jdbcTemplate;
 
 	public ProductDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	@Override
 	public void saveOrUpdate(Product product) {
 		if (product.getProduct_id() == 0) {
-			// Insert New Record Into Database
 			String sqlInsert = "INSERT INTO product (category_id, name, summary, description, price, qty) "
 					+ " VALUES (?, ?, ?, ?,?,?)";
-			jdbcTemplate.update(sqlInsert, product.getCategory_id(), product.getName(), product.getSummary(),
-					product.getDescription(), product.getPrice(), product.getQty());
+			jdbcTemplate.update(sqlInsert, product.getCategory_id(), product.getName(), product.getSummary(), product.getDescription(), product.getPrice(), product.getQty());
 		} else {
-			// Update record in Database
 			String sqlUpdate = "UPDATE product SET category_id = ?, name = ?, summary = ?, description = ?, price = ?, qty = ? WHERE product_id = ?";
-			jdbcTemplate.update(sqlUpdate, product.getCategory_id(), product.getName(), product.getSummary(),
-					product.getDescription(), product.getPrice(), product.getQty(), product.getProduct_id());
+			jdbcTemplate.update(sqlUpdate, product.getCategory_id(), product.getName(), product.getSummary(), product.getDescription(), product.getPrice(), product.getQty(), product.getProduct_id());
 		}
 	}
 
-	@Override
 	public void delete(int productId) {
-		String sqlDelete = "DELETE FROM Product WHERE product_id = ?";
+		String sqlDelete = "DELETE FROM product where product_id = ?";
+		System.out.println(sqlDelete);
 		jdbcTemplate.update(sqlDelete, productId);
 	}
 
-	@Override
 	public Product get(int productId) {
 		String sqlSelect = "SELECT * FROM product where product_id = " + productId;
 		return jdbcTemplate.query(sqlSelect, new ResultSetExtractor<Product>() {
@@ -67,7 +68,6 @@ public class ProductDAOImpl implements ProductDAO {
 		});
 	}
 
-	@Override
 	public List<Product> list() {
 		String sqlSelect = "SELECT * FROM product";
 		List<Product> listProducts = jdbcTemplate.query(sqlSelect, new RowMapper<Product>() {

@@ -53,7 +53,7 @@ public class ProductController {
 	public ModelAndView editProduct(HttpServletRequest request) {
 	    int productId = Integer.parseInt(request.getParameter("id"));
 	    Product product = productDAO.get(productId);
-	    ModelAndView model = new ModelAndView("productForm");
+	    ModelAndView model = new ModelAndView("ProductForm");
 	    model.addObject("product", product);
 	 
 	    return model;
@@ -76,7 +76,7 @@ public class ProductController {
 	public ModelAndView newProduct(ModelAndView model) {
 		Product product = new Product();
 	    model.addObject("product", product);
-	    model.setViewName("productForm");
+	    model.setViewName("ProductForm");
 	    return model;
 	}
 }
