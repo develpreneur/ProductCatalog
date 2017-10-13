@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.demo.catalog.model;
 
 public class Vendor {
 	private int vendor_id;
