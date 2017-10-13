@@ -27,6 +27,7 @@ import com.demo.catalog.model.Vendor;
 public class VendorController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(VendorController.class);
+	
 	@Autowired
     private VendorDAO vendorDAO;
 	/**
@@ -52,7 +53,7 @@ public class VendorController {
 	public ModelAndView editVendor(HttpServletRequest request) {
 	    int vendorId = Integer.parseInt(request.getParameter("id"));
 	    Vendor vendor = vendorDAO.get(vendorId);
-	    ModelAndView model = new ModelAndView("VendorForm");
+	    ModelAndView model = new ModelAndView("vendorForm");
 	    model.addObject("vendor", vendor);
 	 
 	    return model;
@@ -75,7 +76,7 @@ public class VendorController {
 	public ModelAndView newVendor(ModelAndView model) {
 		Vendor vendor = new Vendor();
 	    model.addObject("vendor", vendor);
-	    model.setViewName("VendorForm");
+	    model.setViewName("vendorForm");
 	    return model;
-	}	
+	}
 }
